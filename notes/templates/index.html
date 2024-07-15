@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      
+    {% load django_bootstrap5 %}
+
+    {# Load Bootstrap CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    {# Load Bootstrap alerts #}
+    {% bootstrap_messages %}
+    <title>Notes</title>
+    <style>
+  h1 {
+    color: rgb(82, 209, 82);
+  }
+  body{
+    font-style: oblique;
+    font-family: cursive;
+    
+  }
+  i {
+    padding:5px
+  }
+  body {
+    background-color: blanchedalmond;
+    text-wrap: wrap;
+  }
+  .icon_btn {
+    background-color: transparent;
+    border:none;
+    padding: 0;
+    margin: 0;
+  }
+  .note_form{
+    position:absolute;
+    bottom:4px;
+  }
+  .sp {
+    background-color: transparent;
+    border:none;
+    text-align: center;
+    width:65%;
+    color:rgb(50, 50, 50);
+  }
+</style>
+  </head>
+  <body>
+    <h1 class="p-2">My Notes</h1>
+    <div class="d-flex flex-row p-2 justify-content-center" style="flex-wrap:wrap">
+    <form class="" action="add_title/" method="POST">
+      {% csrf_token %}
+      {{title_form}}
+      <input  class="btn btn-info" style="color:rgb(50, 50, 50);" type="submit" value="start a list...">
+    </input>
+    </form>
+    </div>
+    <div class="d-flex justify-content-center p-5" style="flex-wrap:wrap;min-width: 300px;">
+      {% for title in titles %}
+      <div class="p-3 m-2 col-3 d-flex flex-column align-items-center" style="position:relative;min-height: 300px; width:300px;background-color:yellow;">
+        <form class="form-inline" action="delete_title/{{title.id}}"><span class="h5 text-capitalize text-decoration-underline" style="color:rgb(50, 50, 50);">{{title}}</span> <button class="icon_btn" value="delete" type="submit"><i class="fa fa-trash"></i></button></form>
+        <div class="justify-content-center">
+          {% for note in title.note_set.all %}
+          <form class="form-inline text-lowercase" action="delete_note/{{note.id}}" method="POST">
+            <input maxlength=28 class="sp" type="text" value={{note.description}} />
+            {% csrf_token %}
+            <button class="icon_btn" name="edit" value="edit" type="submit"><i class="fa fa-check"></i></button>
+            <button class="icon_btn" name="delete" value="delete" type="submit"><i class="fa fa-trash"></i></button>
+          </form>      
+          {% endfor %}
+        </div>
+        <form class="note_form" action="add_note/{{title.id}}" method="POST">
+          {% csrf_token %}
+          {{note_form}}
+          <button class="icon_btn" value="add" type="submit"><i class="fa fa-plus-circle"></i></button>  
+        </form>
+      </div>
+    {% endfor %}
+    </div>
+</div>
+  </body>
+
+</html>
