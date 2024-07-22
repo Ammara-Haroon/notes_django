@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
@@ -19,38 +20,39 @@ def add_title(request):
     form.save()
   return redirect('index')
 
-def delete_title(request,id):
-  Title.objects.get(pk = id).delete()
-  return redirect('index')
-
-def update_title(request,id):
+def change_title(request,id):
   title = Title.objects.get(pk = id)
-  form = TitleForm(request.POST)
-  if form.is_valid():
-    title.description = form.description
+  print(request.POST.keys())
+  if "edit" in request.POST.keys():
+    title.description = request.POST.get("title_input").strip().title()
     title.save()
   
+  if "delete" in request.POST.keys():
+    title.delete()
+  
   return redirect('index')
+  
 
 def add_note(request,id):
   form = NoteForm(request.POST)
   if form.is_valid():
     note = Note()
     note.title = Title.objects.get(pk=id)
-    note.description = form.data.get("description")
+    note.description = form.data.get("description").strip().lower()
     note.save()
   return redirect('index')
 
-def delete_note(request,id):
+def change_note(request,id):
   print(request.POST)
-  Note.objects.get(pk = id).delete()
-  return redirect('index')
-
-def update_note(request,id):
   note = Note.objects.get(pk = id)
-  form = NoteForm(request.POST)
-  if form.is_valid():
-    
+  if "edit" in request.POST.keys():
+    note.description = request.POST.get("note_input").strip().lower()
     note.save()
   
+  if "delete" in request.POST.keys():
+    note.delete()
+  
   return redirect('index')
+  
+
+

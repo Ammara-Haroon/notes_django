@@ -1,0 +1,54 @@
+body {
+  font-style: oblique;
+  font-family: cursive;
+  background-color: rgb(241, 211, 211);
+  background-image: url("../assets/bckgd.jpg");
+}
+i {
+  padding: 5px;
+}
+.icon_btn {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.note_form {
+  position: absolute;
+  bottom: 4px;
+}
+.sp {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  width: 65%;
+  color: rgb(50, 50, 50);
+}
+.title_sp {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  width: 65%;
+  color: rgb(50, 50, 50);
+  font-size: large;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.bg1 {
+  background-color: #ff8039;
+}
+.bg2 {
+  background-color: #55bedb;
+}
+.bg3 {
+  background-color: #61d17b;
+}
+.bg4 {
+  background-color: #f7de36;
+}
+.bg5 {
+  background-color: #ef719b;
+}
+.bg6 {
+  background-color: #b460db;
+}
